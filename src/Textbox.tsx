@@ -72,7 +72,7 @@ const Textbox = () => {
 
   return (
     <div>
-      <p>Text</p>
+      <p>Text (generate suggestion with Command/Ctrl + I or automatically every 3 words)</p>
       <textarea style={{width: "80%", height: "100px"}} value={text} onChange={handleChangeText} onKeyDown={handleKeyDown}/>
       {makeSuggestion === true && <p>Loading suggestion...</p>}
       <p>Suggestion: {suggestion}</p>
