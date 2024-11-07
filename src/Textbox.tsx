@@ -53,7 +53,7 @@ const Textbox = () => {
       setTextThree(textThree + suggestionLength);
       setSuggestion('');
     } else if (suggestion) {
-      setDeclinedSuggestions([...declinedSuggestions, suggestion]);
+      setDeclinedSuggestions([suggestion, ...declinedSuggestions]);
       setSuggestion('');
     } else if ((e.metaKey || e.ctrlKey) && e.key === 'i') {
       console.log('manually making suggestion');
