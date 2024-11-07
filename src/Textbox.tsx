@@ -16,6 +16,30 @@ const Textbox = () => {
   const [suggestion, setSuggestion] = useState<string>("");
   const [systemPrompt, setSystemPrompt] = useState<string>(originalSystemPrompt);
   const [declinedSuggestions, setDeclinedSuggestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const storedPrompt = localStorage.getItem('systemPrompt');
+    const storedText = localStorage.getItem('text');
+
+    if (storedPrompt) {
+      setSystemPrompt(storedPrompt);
+    }
+    if (storedText) {
+      setText(storedText);
+      setTextThree(storedText.trim() === '' ? 0 : storedText.trim().split(/\s+/).length);
+    }
+  }, []);
+
+  const updateText = (newText: string) => {
+    setText(newText);
+    localStorage.setItem('text', newText);
+  }
+
+  const updateSystemPrompt = (newPrompt: string) => {
+    setSystemPrompt(newPrompt);
+    localStorage.setItem('systemPrompt', newPrompt);
+  }
+
   
   useEffect(() => {
     if (makeSuggestion) {
@@ -29,7 +53,7 @@ const Textbox = () => {
 
   const handleChangeText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    setText(newText);
+    updateText(newText);
     const newWordCount = newText.trim() === '' ? 0 : newText.trim().split(/\s+/).length;
 
     if (newWordCount < textThree) {
@@ -42,14 +66,14 @@ const Textbox = () => {
   }
 
   const handleChangeSystemPrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setSystemPrompt(e.target.value);
+    updateSystemPrompt(e.target.value);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Tab' && suggestion) {
       const suggestionLength = suggestion.split(/\s+/).length;
       e.preventDefault();
-      setText(text + suggestion);
+      updateText(text + suggestion);
       setTextThree(textThree + suggestionLength);
       setSuggestion('');
     } else if (suggestion) {
@@ -65,7 +89,7 @@ const Textbox = () => {
     const oldSugg = declinedSuggestions[index];
     const suggestionLength = oldSugg.split(/\s+/).length;
     console.log('accepting previously declined suggestion: ', oldSugg);
-    setText(text + oldSugg);
+    updateText(text + oldSugg);
     setTextThree(textThree + suggestionLength);
     setDeclinedSuggestions(declinedSuggestions.filter((_, i) => i !== index));
   }
@@ -89,7 +113,7 @@ const Textbox = () => {
       </ul>
       <p>Below is the system prompt for auto completions. All occurrences of [input] in your system prompt will be replaced with the actual input text above.</p>
       <textarea style={{width: "100%", height: "200px"}} value={systemPrompt} onChange={handleChangeSystemPrompt} disabled={!!makeSuggestion}/>
-      <button onClick={() => setSystemPrompt(originalSystemPrompt)} disabled={!!makeSuggestion}>Reset system prompt to original</button>
+      <button onClick={() => updateSystemPrompt(originalSystemPrompt)} disabled={!!makeSuggestion}>Reset system prompt to original</button>
     </div>
   )
 }
