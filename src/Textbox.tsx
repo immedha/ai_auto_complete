@@ -8,13 +8,16 @@ const Textbox = () => {
   const [textThree, setTextThree] = useState<number>(0);
   const [makeSuggestion, setMakeSuggestion] = useState<boolean>(false);
   const [suggestion, setSuggestion] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (makeSuggestion) {
       console.log('making suggestion');
+      setLoading(true);
       generateWords(text).then(suggestion => {
         setSuggestion(suggestion);
       });
+      setLoading(false);
       setMakeSuggestion(false);
     }
   }, [makeSuggestion, text]);
@@ -48,7 +51,9 @@ const Textbox = () => {
   return (
     <div>
       <textarea value={text} onChange={handleChange} onKeyDown={handleKeyDown}/>
+      {loading && <p>Loading suggestion...</p>}
       <p>Suggestion: {suggestion}</p>
+      
     </div>
   )
 }
