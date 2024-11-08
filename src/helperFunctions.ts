@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
 
-export const generateWords = async (input: string, systemPrompt: string) => {
+export const generateWords2 = async (input: string, systemPrompt: string) => {
   try {
     const newSystemPrompt = systemPrompt.replaceAll("[input]", input);
     const completion = await openai.chat.completions.create({
