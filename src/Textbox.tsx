@@ -95,27 +95,96 @@ const Textbox = () => {
   }
 
   return (
-    <div>
-      <p>Text (generate suggestion with Command/Ctrl + I or automatically every 3 words)</p>
-      <textarea style={{width: "80%", height: "100px"}} value={text} onChange={handleChangeText} onKeyDown={handleKeyDown}/>
-      {makeSuggestion === true && <p>Loading suggestion...</p>}
-      <p>Suggestion: {suggestion}</p>
-      <p>Declined suggestions (you can click on one and it will insert at current cursor position):{declinedSuggestions.length === 0 && ' None'}</p>
-      <ul>
-        {declinedSuggestions.map(
-          (suggestion, index) => {
-            return (
-              <li key={uuidv4()} style={{display: 'flex', flexDirection: 'row'}}>
-                <button disabled={!!makeSuggestion} onClick={() => handleAcceptSuggestion(index)}>{suggestion}</button>
-              </li>
-            )
-          })}
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '700px', margin: 'auto', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <h1 style={{ color: '#4A90E2', fontSize: '24px', textAlign: 'center' }}>Auto Completion Tool</h1>
+
+      <p style={{ fontSize: '14px', color: '#333' }}>
+        Text (generate suggestion with <strong>Command/Ctrl + I</strong> or automatically every 3 words)
+      </p>
+
+      <textarea
+        style={{
+          width: '100%',
+          height: '100px',
+          padding: '10px',
+          fontSize: '14px',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
+          resize: 'none',
+          marginBottom: '15px'
+        }}
+        value={text}
+        onChange={handleChangeText}
+        onKeyDown={handleKeyDown}
+      />
+
+      {makeSuggestion === true && <p style={{ fontStyle: 'italic', color: '#999' }}>Loading suggestion...</p>}
+      
+      <p><strong>Suggestion:</strong> {suggestion}</p>
+      
+      <p style={{ marginBottom: '10px' }}>
+        <strong>Declined Suggestions:</strong> {declinedSuggestions.length === 0 && 'None'}
+      </p>
+      
+      <ul style={{ listStyleType: 'none', padding: '0' }}>
+        {declinedSuggestions.map((suggestion, index) => (
+          <li key={uuidv4()} style={{ marginBottom: '8px' }}>
+            <button
+              style={{
+                backgroundColor: '#f5f5f5',
+                color: '#333',
+                padding: '8px 12px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                cursor: makeSuggestion ? 'not-allowed' : 'pointer',
+                opacity: makeSuggestion ? 0.6 : 1
+              }}
+              disabled={!!makeSuggestion}
+              onClick={() => handleAcceptSuggestion(index)}
+            >
+              {suggestion}
+            </button>
+          </li>
+        ))}
       </ul>
-      <p>Below is the system prompt for auto completions. All occurrences of [input] in your system prompt will be replaced with the actual input text above.</p>
-      <textarea style={{width: "100%", height: "200px"}} value={systemPrompt} onChange={handleChangeSystemPrompt} disabled={!!makeSuggestion}/>
-      <button onClick={() => updateSystemPrompt(originalSystemPrompt)} disabled={!!makeSuggestion}>Reset system prompt to original</button>
+      
+      <p style={{ fontSize: '14px', marginTop: '20px', color: '#666' }}>
+        Below is the system prompt for auto completions. All occurrences of [input] in your system prompt will be replaced with the actual input text above.
+      </p>
+      
+      <textarea
+        style={{
+          width: '100%',
+          height: '150px',
+          padding: '10px',
+          fontSize: '14px',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
+          resize: 'none',
+          marginBottom: '15px'
+        }}
+        value={systemPrompt}
+        onChange={handleChangeSystemPrompt}
+        disabled={!!makeSuggestion}
+      />
+      
+      <button
+        style={{
+          backgroundColor: '#4A90E2',
+          color: 'white',
+          padding: '10px 15px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '14px'
+        }}
+        onClick={() => updateSystemPrompt(originalSystemPrompt)}
+        disabled={!!makeSuggestion}
+      >
+        Reset system prompt to original
+      </button>
     </div>
-  )
+  );
 }
 
 export default Textbox;
