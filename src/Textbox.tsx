@@ -104,7 +104,7 @@ const Textbox = () => {
   return (
     <div
       style={{
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         padding: "20px",
         maxWidth: "700px",
         margin: "auto",
