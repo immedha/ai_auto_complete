@@ -228,7 +228,7 @@ const Textbox = () => {
 
       <p style={{ fontSize: "14px", color: "#333" }}>
         Text (generate suggestion with <strong>Command/Ctrl + I</strong> or
-        automatically every 3 words)
+        automatically every 3-4 words. Make sure to pause typing during these times to allow for generated words to display)
       </p>
 
       <div
@@ -280,7 +280,8 @@ const Textbox = () => {
       <p style={{ fontSize: "14px", marginTop: "20px", color: "#666" }}>
         Below is the system prompt for auto completions. All occurrences of
         [input_prefix] and [input_suffix] in your system prompt will be replaced with the actual input
-        text above before and after the cursor position of the generation.
+        text above before and after the cursor position of the generation. Feel free to edit the system prompt to optimize
+        the autocompletion suggestions to your use case.
       </p>
 
       <textarea
