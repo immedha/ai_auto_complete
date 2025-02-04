@@ -76,7 +76,6 @@ const Textbox = () => {
 
   useEffect(() => {
     if (makeSuggestion) {
-      console.log("making suggestion");
       const cursorPos = getCursorPos();
 
       // Generate a suggestion
@@ -118,7 +117,6 @@ const Textbox = () => {
     if (newWordCount < textThree) {
       setTextThree(newWordCount);
     } else if (newText[getCursorPos()-1] === " " && newWordCount >= textThree + 3) {
-      console.log("word count is ", newWordCount, " trying to make suggestion");
       setTextThree(newWordCount);
       setMakeSuggestion(true);
     }
@@ -181,7 +179,6 @@ const Textbox = () => {
       setDeclinedSuggestions([suggestion, ...declinedSuggestions]);
       setSuggestion("");
     } else if ((e.metaKey || e.ctrlKey) && e.key === "i") {
-      console.log("manually making suggestion");
       setMakeSuggestion(true);
     }
   };
@@ -254,7 +251,7 @@ const Textbox = () => {
       />
 
       <p style={{ marginBottom: "10px" }}>
-        <strong>Declined Suggestions (click on one to use it):</strong>{" "}
+        <strong>Declined Suggestions:</strong>{" "}
         {declinedSuggestions.length === 0 && "None"}
       </p>
 
